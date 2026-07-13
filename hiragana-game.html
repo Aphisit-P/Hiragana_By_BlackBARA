@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="sky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ひらがな Lab — เรียนฮิรางานะ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Kanit:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 10px;
+    --font-jp: 'Zen Maru Gothic', 'Kosugi Maru', sans-serif;
+    --font-th: 'Kanit', 'Noto Sans Thai', sans-serif;
+    --font-en: 'Poppins', sans-serif;
+    --shadow-soft: 0 10px 30px -12px rgba(30,20,40,.25);
+    --shadow-pop: 0 16px 40px -14px rgba(30,20,40,.35);
+  }
+
+  /* ===== THEMES ===== */
+  [data-theme="sky"]{
+    --bg: #eafdff;
+    --bg-grad: radial-gradient(1200px 600px at 10% -10%, #d3fbf6 0%, transparent 60%), radial-gradient(1000px 700px at 110% 10%, #fff1d9 0%, transparent 55%), #eafdff;
+    --card: #ffffff;
+    --primary: #14b8c9;      /* deep tone of Bright Blue #51e2f5 */
+    --primary-soft:#51e2f5;
+    --secondary:#9df9ef;     /* Blue Green */
+    --accent:#edf756;        /* Dusty White (yellow-green) */
+    --pink:#ffa8b6;          /* Pink Sand */
+    --dark:#a28089;          /* Dark Sand */
+    --text:#1f3a3d;
+    --text-soft:#4c6b6e;
+    --grid-line: rgba(20,184,201,.16);
+    --input-bg:#f2fdff;
+  }
+  [data-theme="fuji"]{
+    --bg:#f6f3fc;
+    --bg-grad: radial-gradient(1200px 600px at 100% -10%, #eee7fb 0%, transparent 55%), radial-gradient(1000px 700px at -10% 20%, #dcebfa 0%, transparent 55%), #f6f3fc;
+    --card:#ffffff;
+    --primary:#8458b3;       /* Purple Pain */
+    --primary-soft:#d0bdf4;  /* Medium Purple */
+    --secondary:#a0d2eb;     /* Ice Cold */
+    --accent:#e5eaf5;        /* Freeze Purple */
+    --pink:#cdb4e0;
+    --dark:#a28089;          /* Heavy Purple */
+    --text:#31234a;
+    --text-soft:#5b4b74;
+    --grid-line: rgba(132,88,179,.16);
+    --input-bg:#f8f6fd;
+  }
+  [data-theme="wood"]{
+    --bg:#f1e3d0;
+    --bg-grad: radial-gradient(1100px 600px at 0% -10%, #f6e9d6 0%, transparent 55%), radial-gradient(1000px 700px at 100% 10%, #ecd8ba 0%, transparent 55%), #f1e3d0;
+    --card:#fbf3e6;
+    --primary:#8a5a34;
+    --primary-soft:#c48a52;
+    --secondary:#deb27a;
+    --accent:#e3b23c;
+    --pink:#b5651d;
+    --dark:#4b2e1e;
+    --text:#3e2723;
+    --text-soft:#6d4c3a;
+    --grid-line: rgba(138,90,52,.18);
+    --input-bg:#fdf8ef;
+  }
+  [data-theme="dark"]{
+    --bg:#12121a;
+    --bg-grad: radial-gradient(1200px 600px at 10% -10%, #1e1b2e 0%, transparent 60%), radial-gradient(1000px 700px at 110% 10%, #1a2430 0%, transparent 55%), #12121a;
+    --card:#1c1c28;
+    --primary:#7dd8f0;       /* cool cyan accent, legible on dark */
+    --primary-soft:#3a3a52;
+    --secondary:#4a3f66;     /* muted violet */
+    --accent:#f5d76e;        /* warm gold highlight */
+    --pink:#e08fa0;
+    --dark:#0a0a10;
+    --text:#eef0f6;
+    --text-soft:#a3a6b8;
+    --grid-line: rgba(125,216,240,.10);
+    --input-bg:#22222f;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background: var(--bg-grad);
+    font-family: var(--font-th);
+    color:var(--text);
+    transition: background .4s ease, color .4s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button{font-family:inherit;}
+
+  .app{
+    max-width:1100px;
+    margin:0 auto;
+    padding: clamp(12px,3vw,28px) clamp(14px,4vw,32px) 60px;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ===== HEADER ===== */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    padding: 6px 4px 20px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    font-family:var(--font-jp);
+    font-weight:900;
+    font-size: clamp(26px,4vw,34px);
+    color:var(--primary);
+    line-height:1;
+  }
+  .brand-sub{
+    font-size:12.5px;
+    color:var(--text-soft);
+    font-weight:500;
+    letter-spacing:.02em;
+  }
+  .topbar-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+
+  .pill-select{
+    position:relative;
+  }
+  .pill-select select{
+    appearance:none;
+    -webkit-appearance:none;
+    border:none;
+    background:var(--card);
+    color:var(--text);
+    font-family:var(--font-th);
+    font-weight:600;
+    font-size:13.5px;
+    padding:9px 30px 9px 14px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-soft);
+    cursor:pointer;
+  }
+  .pill-select::after{
+    content:"▾";
+    position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    font-size:10px; color:var(--text-soft); pointer-events:none;
+  }
+
+  .theme-dots{display:flex;gap:8px;background:var(--card);padding:6px;border-radius:999px;box-shadow:var(--shadow-soft);}
+  .theme-dot{
+    width:26px;height:26px;border-radius:50%;border:2px solid transparent;
+    cursor:pointer; position:relative; overflow:hidden;
+  }
+  .theme-dot[data-t="sky"]{background: linear-gradient(135deg,#51e2f5,#ffa8b6);}
+  .theme-dot[data-t="fuji"]{background: linear-gradient(135deg,#8458b3,#a0d2eb);}
+  .theme-dot[data-t="wood"]{background: linear-gradient(135deg,#8a5a34,#e3b23c);}
+  .theme-dot[data-t="dark"]{background: linear-gradient(135deg,#12121a,#7dd8f0); border-color: rgba(255,255,255,.15);}
+  .theme-dot.active{border-color:var(--text); transform:scale(1.08);}
+
+  /* ===== MODE SELECT ===== */
+  .hero{
+    text-align:center;
+    padding: clamp(10px,3vw,20px) 6px clamp(20px,4vw,32px);
+  }
+  .hero h1{
+    font-family:var(--font-jp);
+    font-size:clamp(28px,5vw,44px);
+    margin:0 0 8px;
+    color:var(--text);
+  }
+  .hero p{
+    margin:0; color:var(--text-soft); font-size:clamp(13px,2vw,16px);
+  }
+
+  .mode-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    margin-top:8px;
+  }
+  .mode-card{
+    background:var(--card);
+    border-radius:var(--radius-lg);
+    padding:24px 22px;
+    box-shadow:var(--shadow-soft);
+    cursor:pointer;
+    border:2px solid transparent;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    text-align:left;
+    position:relative;
+    overflow:hidden;
+  }
+  .mode-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-pop); border-color:var(--primary-soft);}
+  .mode-card .num{
+    font-family:var(--font-jp); font-weight:900; font-size:13px;
+    color:var(--primary); opacity:.7; letter-spacing:.06em;
+  }
+  .mode-card .glyph{
+    font-family:var(--font-jp); font-size:40px; font-weight:700; color:var(--text);
+    margin:6px 0 10px; line-height:1;
+  }
+  .mode-card h3{margin:0 0 6px; font-size:17px; color:var(--text);}
+  .mode-card p{margin:0; font-size:13px; color:var(--text-soft); line-height:1.5;}
+
+  /* ===== PANELS ===== */
+  .panel{display:none;flex:1;flex-direction:column;}
+  .panel.active{display:flex;}
+
+  .panel-topline{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; flex-wrap:wrap;
+  }
+  .back-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--card); color:var(--text); border:none;
+    padding:9px 16px; border-radius:999px; font-weight:600; font-size:13.5px;
+    cursor:pointer; box-shadow:var(--shadow-soft);
+  }
+  .back-btn:hover{color:var(--primary);}
+
+  .stat-chip{
+    background:var(--card); padding:8px 14px; border-radius:999px;
+    font-size:13px; font-weight:600; color:var(--text-soft); box-shadow:var(--shadow-soft);
+    display:flex; gap:14px;
+  }
+  .stat-chip b{color:var(--primary); font-weight:700;}
+
+  /* ===== FLASHCARD ===== */
+  .stage-wrap{flex:1; display:flex; align-items:center; justify-content:center; padding:8px 0 18px;}
+  .flashcard{
+    width:100%;
+    max-width:560px;
+    min-height:min(58vh,420px);
+    background:var(--card);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-pop);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:14px;
+    padding: 30px 24px;
+    position:relative;
+    cursor:pointer;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 34px 34px;
+    background-position:center;
+    user-select:none;
+    transition: transform .12s ease;
+  }
+  .flashcard:active{transform:scale(.985);}
+  .flashcard.no-click{cursor:default;}
+
+  .kana-big{
+    font-family:var(--font-jp);
+    font-weight:700;
+    font-size:clamp(70px,18vw,150px);
+    color:var(--text);
+    line-height:1;
+  }
+  .romaji-big{
+    font-family:var(--font-en);
+    font-weight:700;
+    font-size:clamp(38px,10vw,72px);
+    color:var(--primary);
+    letter-spacing:.02em;
+  }
+  .sub-line{
+    font-family:var(--font-en);
+    font-size:15px;
+    color:var(--text-soft);
+    background:var(--input-bg);
+    padding:4px 14px;
+    border-radius:999px;
+  }
+  .hint-line{
+    position:absolute; bottom:14px; left:0; right:0; text-align:center;
+    font-size:12px; color:var(--text-soft); opacity:.75; font-weight:500;
+  }
+
+  /* mode 3 - typing */
+  .answer-row{
+    display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap; justify-content:center;
+  }
+  .answer-input{
+    font-family:var(--font-en);
+    font-size:20px; font-weight:600;
+    padding:12px 16px;
+    border-radius:var(--radius-sm);
+    border:2px solid var(--secondary);
+    background:var(--input-bg);
+    color:var(--text);
+    width:220px;
+    text-align:center;
+    outline:none;
+  }
+  .answer-input:focus{border-color:var(--primary);}
+  .answer-input.wrong{border-color:#e5484d; background:#fff1f1;}
+  .answer-input.right{border-color:#2fb380; background:#eefdf6;}
+  .check-btn{
+    background:var(--primary); color:#fff; border:none; font-weight:700;
+    padding:12px 22px; border-radius:var(--radius-sm); cursor:pointer; font-size:15px;
+  }
+  .check-btn:hover{filter:brightness(1.06);}
+  .feedback{
+    min-height:22px; font-weight:600; font-size:14px;
+  }
+  .feedback.ok{color:#1f9d6b;}
+  .feedback.no{color:#d64545;}
+
+  /* mode 2 - choices */
+  .choice-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:12px;
+    width:100%; max-width:360px; margin-top:6px;
+  }
+  .choice-btn{
+    font-family:var(--font-jp);
+    font-size:clamp(30px,7vw,46px); font-weight:700; color:var(--text);
+    background:var(--input-bg); border:2px solid var(--secondary);
+    border-radius:var(--radius-md); padding:14px 8px;
+    cursor:pointer; transition: transform .12s ease, border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn:active{transform:scale(.96);}
+  .choice-btn.correct{border-color:#2fb380; background:#eefdf6; color:#1f9d6b;}
+  .choice-btn.wrong{border-color:#e5484d; background:#fff1f1; color:#d64545;}
+  .choice-btn[disabled]{cursor:default;}
+
+  /* mode 4 */
+  .toggle-row{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .toggle-btn{
+    background:var(--card); color:var(--text); border:none;
+    padding:8px 16px; border-radius:999px; font-size:13px; font-weight:600;
+    cursor:pointer; box-shadow:var(--shadow-soft); display:flex; align-items:center; gap:6px;
+  }
+  .toggle-btn.off{color:var(--text-soft); opacity:.55;}
+  .toggle-btn .dot{width:8px;height:8px;border-radius:50%;background:var(--primary);}
+  .toggle-btn.off .dot{background:var(--dark);}
+  .meaning-line{
+    font-family:var(--font-th);
+    font-size:17px; font-weight:500; color:var(--text-soft);
+    background:var(--input-bg); padding:6px 16px; border-radius:999px;
+  }
+  .blurred{filter:blur(7px); opacity:.5; transition:filter .2s;}
+
+  footer{
+    text-align:center; margin-top:30px; font-size:12px; color:var(--text-soft); opacity:.7;
+  }
+
+  /* ===== MODE 5 - CHART ===== */
+  .chart-wrap{display:flex; flex-direction:column; gap:20px; padding-bottom:24px;}
+  .chart-block{
+    background:var(--card); border-radius:var(--radius-lg); box-shadow:var(--shadow-soft);
+    padding:18px 16px 22px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .chart-block h2{
+    margin:0 0 14px; font-size:14.5px; color:var(--text); display:flex; align-items:center;
+    gap:10px; font-weight:700; flex-wrap:wrap;
+  }
+  .chart-block h2 .tag{
+    font-family:var(--font-jp); font-weight:900; color:var(--primary); font-size:13px;
+    background:var(--input-bg); padding:4px 12px; border-radius:999px; letter-spacing:.01em;
+  }
+  .kana-table{display:flex; flex-direction:column; gap:6px; min-width:300px;}
+  .kt-row{display:grid; gap:6px;}
+  .kt-head-cell{
+    font-family:var(--font-en); font-weight:700; font-size:11px; color:var(--text-soft);
+    text-align:center; padding:2px 0 6px; letter-spacing:.04em; text-transform:uppercase;
+  }
+  .kt-label{
+    background:var(--primary); color:#fff; border-radius:var(--radius-sm);
+    display:flex; align-items:center; justify-content:center; font-weight:700;
+    font-family:var(--font-en); font-size:12.5px; min-height:46px; letter-spacing:.02em;
+  }
+  .kt-cell{
+    background:var(--input-bg); border-radius:var(--radius-sm); padding:6px 2px;
+    text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:2px; min-height:46px; transition:transform .12s ease, background .15s ease;
+  }
+  .kt-cell:not(.empty):hover{background:var(--secondary); transform:translateY(-2px);}
+  .kt-cell.empty{background:transparent;}
+  .kt-cell .kj{
+    font-family:var(--font-jp); font-weight:700; font-size:clamp(15px,3.4vw,22px);
+    color:var(--text); line-height:1;
+  }
+  .kt-cell .rj{
+    font-family:var(--font-en); font-size:10px; color:var(--text-soft); font-weight:600;
+  }
+  .chart-legend{
+    display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-soft);
+    background:var(--input-bg); padding:8px 14px; border-radius:999px; margin-bottom:2px;
+    width:fit-content;
+  }
+
+  @media (max-width:520px){
+    .topbar{gap:10px;}
+    .mode-grid{grid-template-columns:1fr 1fr; gap:12px;}
+    .mode-card{padding:16px 14px;}
+    .mode-card .glyph{font-size:30px;}
+    .answer-input{width:170px;}
+    .kt-label{font-size:11px; min-height:40px;}
+    .kt-cell{min-height:40px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <div>
+        <div class="brand-mark">ひらがな Lab</div>
+        <div class="brand-sub" data-i18n="appSubtitle">ฝึกจำอักษรฮิรางานะ 46 ตัว</div>
+      </div>
+    </div>
+    <div class="topbar-controls">
+      <div class="pill-select">
+        <select id="langSelect">
+          <option value="th">🇹🇭 ไทย</option>
+          <option value="en">🇬🇧 English</option>
+        </select>
+      </div>
+      <div class="theme-dots" id="themeDots">
+        <div class="theme-dot active" data-t="sky" title="Sky"></div>
+        <div class="theme-dot" data-t="fuji" title="Fuji"></div>
+        <div class="theme-dot" data-t="wood" title="Wood"></div>
+        <div class="theme-dot" data-t="dark" title="Dark"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MODE SELECT SCREEN ===== -->
+  <section id="screen-home">
+    <div class="hero">
+      <h1 data-i18n="heroTitle">เลือกโหมดฝึกฝน</h1>
+      <p data-i18n="heroSub">เรียนรู้และทดสอบตัวอักษรฮิรางานะทั้ง 46 ตัว ผ่าน 5 รูปแบบ</p>
+    </div>
+    <div class="mode-grid">
+      <div class="mode-card" data-mode="0">
+        <div class="num">MODE 00</div>
+        <div class="glyph">ひょう</div>
+        <h3 data-i18n="mode5Title">ตารางฮิรางานะ</h3>
+        <p data-i18n="mode5Desc">ตารางอ้างอิงอักษรฮิรางานะครบชุด พร้อมคำอ่านและเสียงพิเศษ</p>
+      </div>
+      <div class="mode-card" data-mode="1">
+        <div class="num">MODE 01</div>
+        <div class="glyph">あ</div>
+        <h3 data-i18n="mode1Title">สุ่มตัวอักษร</h3>
+        <p data-i18n="mode1Desc">ดูตัวอักษรฮิรางานะที่สุ่มขึ้นมา ฝึกจำรูปตัวอักษร</p>
+      </div>
+      <div class="mode-card" data-mode="2">
+        <div class="num">MODE 02</div>
+        <div class="glyph">ka → か</div>
+        <h3 data-i18n="mode2Title">สุ่มคำอ่าน</h3>
+        <p data-i18n="mode2Desc">ดูคำอ่านโรมาจิที่สุ่มขึ้นมา ฝึกนึกถึงตัวอักษรที่ตรงกัน</p>
+      </div>
+      <div class="mode-card" data-mode="3">
+        <div class="num">MODE 03</div>
+        <div class="glyph">さ→sa</div>
+        <h3 data-i18n="mode3Title">พิมพ์คำอ่าน</h3>
+        <p data-i18n="mode3Desc">พิมพ์คำอ่านให้ตรงกับตัวอักษรที่สุ่มขึ้นมา วัดความแม่นยำ</p>
+      </div>
+      <div class="mode-card" data-mode="4">
+        <div class="num">MODE 04</div>
+        <div class="glyph">ねこ</div>
+        <h3 data-i18n="mode4Title">คำศัพท์ฮิรางานะ</h3>
+        <p data-i18n="mode4Desc">คำศัพท์ที่เขียนด้วยฮิรางานะล้วน พร้อมคำอ่านและคำแปล</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 1 ===== -->
+  <section class="panel" id="panel-1">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode1Title">สุ่มตัวอักษร</span></div>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard" id="card1">
+        <div class="kana-big" id="kanaDisplay1">あ</div>
+        <div class="hint-line" data-i18n="hintClick">แตะการ์ด หรือกด Space / Enter เพื่อสุ่มใหม่</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 2 ===== -->
+  <section class="panel" id="panel-2">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip">
+        <span data-i18n="scoreLabel">คะแนน</span>: <b id="scoreVal2">0</b>/<span id="totalVal2">0</span>
+        &nbsp;•&nbsp; <span data-i18n="streakLabel">ติดต่อกัน</span>: <b id="streakVal2">0</b>
+      </div>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard no-click" id="card2">
+        <div class="romaji-big" id="romajiDisplay2">a</div>
+        <div class="choice-grid" id="choiceGrid2"></div>
+        <div class="feedback" id="feedback2"></div>
+        <div class="hint-line" data-i18n="hintClick2">แตะตัวอักษรฮิรางานะที่ตรงกับคำอ่าน</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 3 ===== -->
+  <section class="panel" id="panel-3">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip">
+        <span data-i18n="scoreLabel">คะแนน</span>: <b id="scoreVal">0</b>/<span id="totalVal">0</span>
+        &nbsp;•&nbsp; <span data-i18n="streakLabel">ติดต่อกัน</span>: <b id="streakVal">0</b>
+      </div>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard no-click" id="card3">
+        <div class="kana-big" id="kanaDisplay3">た</div>
+        <div class="answer-row">
+          <input type="text" id="answerInput" class="answer-input" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button class="check-btn" id="checkBtn" data-i18n="checkBtn">ตรวจคำตอบ</button>
+        </div>
+        <div class="feedback" id="feedback3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 4 ===== -->
+  <section class="panel" id="panel-4">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode4Title">คำศัพท์ฮิรางานะ</span></div>
+    </div>
+    <div class="toggle-row">
+      <button class="toggle-btn" id="toggleRomaji"><span class="dot"></span><span id="toggleRomajiText" data-i18n="hideRomaji">ซ่อนคำอ่าน</span></button>
+      <button class="toggle-btn" id="toggleMeaning"><span class="dot"></span><span id="toggleMeaningText" data-i18n="hideMeaning">ซ่อนคำแปล</span></button>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard" id="card4">
+        <div class="kana-big" id="kanaDisplay4">ねこ</div>
+        <div class="sub-line" id="romajiDisplay4">neko</div>
+        <div class="meaning-line" id="meaningDisplay4">แมว</div>
+        <div class="hint-line" data-i18n="hintClick4">แตะการ์ด หรือกด Space / Enter เพื่อคำถัดไป</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 5 - CHART ===== -->
+  <section class="panel" id="panel-0">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode5Title">ตารางฮิรางานะ</span></div>
+    </div>
+    <div class="chart-legend" data-i18n="chartLegend">แตะที่ตัวอักษรเพื่อดูคำอ่านชัดๆ</div>
+    <div class="chart-wrap">
+      <div class="chart-block">
+        <h2><span class="tag">あ・か・さ…</span><span data-i18n="chartMainTitle">เสียงพื้นฐาน (Gojūon)</span></h2>
+        <div class="kana-table" id="tableMain"></div>
+      </div>
+      <div class="chart-block">
+        <h2><span class="tag">が・ざ・だ・ば・ぱ</span><span data-i18n="chartDakutenTitle">เสียงพิเศษ: เสียงก้อง / กึ่งก้อง (Dakuten・Handakuten)</span></h2>
+        <div class="kana-table" id="tableDakuten"></div>
+      </div>
+      <div class="chart-block">
+        <h2><span class="tag">きゃ・しゃ・ちゃ…</span><span data-i18n="chartYouonTitle">เสียงพิเศษ: เสียงควบ (Yōon)</span></h2>
+        <div class="kana-table" id="tableYouon"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer data-i18n="footerText">ひらがな Lab — ฝึกฮิรางานะให้คล่อง ทีละตัว ทีละคำ</footer>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const HIRAGANA = [
+  ["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"],
+  ["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"],
+  ["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"],
+  ["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"],
+  ["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"],
+  ["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"],
+  ["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"],
+  ["や","ya"],["ゆ","yu"],["よ","yo"],
+  ["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"],
+  ["わ","wa"],["を","wo"],["ん","n"]
+];
+
+const ALT_ROMAJI = {
+  "shi":["si"], "chi":["ti"], "tsu":["tu"], "fu":["hu"],
+  "wo":["o"], "ji":["zi"], "n":["nn"]
+};
+
+const VOCAB = [
+  ["あさ","asa","เช้า","morning"],
+  ["ひる","hiru","กลางวัน","daytime"],
+  ["よる","yoru","กลางคืน","night"],
+  ["みず","mizu","น้ำ","water"],
+  ["やま","yama","ภูเขา","mountain"],
+  ["かわ","kawa","แม่น้ำ","river"],
+  ["うみ","umi","ทะเล","sea"],
+  ["そら","sora","ท้องฟ้า","sky"],
+  ["はな","hana","ดอกไม้","flower"],
+  ["くも","kumo","เมฆ","cloud"],
+  ["あめ","ame","ฝน","rain"],
+  ["かぜ","kaze","ลม","wind"],
+  ["ゆき","yuki","หิมะ","snow"],
+  ["いえ","ie","บ้าน","house"],
+  ["とり","tori","นก","bird"],
+  ["いぬ","inu","หมา","dog"],
+  ["ねこ","neko","แมว","cat"],
+  ["さかな","sakana","ปลา","fish"],
+  ["たまご","tamago","ไข่","egg"],
+  ["くるま","kuruma","รถยนต์","car"],
+  ["でんしゃ","densha","รถไฟ","train"],
+  ["がっこう","gakkou","โรงเรียน","school"],
+  ["ともだち","tomodachi","เพื่อน","friend"],
+  ["かぞく","kazoku","ครอบครัว","family"],
+  ["せんせい","sensei","ครู","teacher"],
+  ["ほん","hon","หนังสือ","book"],
+  ["つくえ","tsukue","โต๊ะ","desk"],
+  ["いす","isu","เก้าอี้","chair"],
+  ["あさごはん","asagohan","อาหารเช้า","breakfast"],
+  ["ありがとう","arigatou","ขอบคุณ","thank you"],
+  ["すみません","sumimasen","ขอโทษ / ขออนุญาต","sorry / excuse me"],
+  ["おはよう","ohayou","อรุณสวัสดิ์","good morning"],
+  ["こんにちは","konnichiwa","สวัสดี","hello"],
+  ["こんばんは","konbanwa","สวัสดีตอนเย็น","good evening"],
+  ["さようなら","sayounara","ลาก่อน","goodbye"],
+  ["かわいい","kawaii","น่ารัก","cute"],
+  ["おいしい","oishii","อร่อย","delicious"],
+  ["たのしい","tanoshii","สนุก","fun"],
+  ["うれしい","ureshii","ดีใจ","happy"],
+  ["さむい","samui","หนาว","cold"]
+];
+
+const GOJUON_ROWS = [
+  {label:"-",  cells:["あ|a","い|i","う|u","え|e","お|o"]},
+  {label:"k",  cells:["か|ka","き|ki","く|ku","け|ke","こ|ko"]},
+  {label:"s",  cells:["さ|sa","し|shi","す|su","せ|se","そ|so"]},
+  {label:"t",  cells:["た|ta","ち|chi","つ|tsu","て|te","と|to"]},
+  {label:"n",  cells:["な|na","に|ni","ぬ|nu","ね|ne","の|no"]},
+  {label:"h",  cells:["は|ha","ひ|hi","ふ|fu","へ|he","ほ|ho"]},
+  {label:"m",  cells:["ま|ma","み|mi","む|mu","め|me","も|mo"]},
+  {label:"y",  cells:["や|ya","","ゆ|yu","","よ|yo"]},
+  {label:"r",  cells:["ら|ra","り|ri","る|ru","れ|re","ろ|ro"]},
+  {label:"w",  cells:["わ|wa","","","","を|wo"]},
+  {label:"n",  cells:["ん|n","","","",""]}
+];
+
+const DAKUTEN_ROWS = [
+  {label:"g", cells:["が|ga","ぎ|gi","ぐ|gu","げ|ge","ご|go"]},
+  {label:"z", cells:["ざ|za","じ|ji","ず|zu","ぜ|ze","ぞ|zo"]},
+  {label:"d", cells:["だ|da","ぢ|ji","づ|zu","で|de","ど|do"]},
+  {label:"b", cells:["ば|ba","び|bi","ぶ|bu","べ|be","ぼ|bo"]},
+  {label:"p", cells:["ぱ|pa","ぴ|pi","ぷ|pu","ぺ|pe","ぽ|po"]}
+];
+
+const YOUON_ROWS = [
+  {label:"ky", cells:["きゃ|kya","きゅ|kyu","きょ|kyo"]},
+  {label:"sh", cells:["しゃ|sha","しゅ|shu","しょ|sho"]},
+  {label:"ch", cells:["ちゃ|cha","ちゅ|chu","ちょ|cho"]},
+  {label:"ny", cells:["にゃ|nya","にゅ|nyu","にょ|nyo"]},
+  {label:"hy", cells:["ひゃ|hya","ひゅ|hyu","ひょ|hyo"]},
+  {label:"my", cells:["みゃ|mya","みゅ|myu","みょ|myo"]},
+  {label:"ry", cells:["りゃ|rya","りゅ|ryu","りょ|ryo"]},
+  {label:"gy", cells:["ぎゃ|gya","ぎゅ|gyu","ぎょ|gyo"]},
+  {label:"j",  cells:["じゃ|ja","じゅ|ju","じょ|jo"]},
+  {label:"by", cells:["びゃ|bya","びゅ|byu","びょ|byo"]},
+  {label:"py", cells:["ぴゃ|pya","ぴゅ|pyu","ぴょ|pyo"]}
+];
+
+/* ============ i18n ============ */
+const STR = {
+  th:{
+    appSubtitle:"ฝึกจำอักษรฮิรางานะ 46 ตัว",
+    heroTitle:"เลือกโหมดฝึกฝน",
+    heroSub:"เรียนรู้และทดสอบตัวอักษรฮิรางานะทั้ง 46 ตัว",
+    mode1Title:"สุ่มตัวอักษร", mode1Desc:"ดูตัวอักษรฮิรางานะที่สุ่มขึ้นมา ฝึกจำรูปตัวอักษร",
+    mode2Title:"สุ่มคำอ่าน", mode2Desc:"ดูคำอ่านโรมาจิที่สุ่มขึ้นมา แล้วเลือกตัวอักษรฮิรางานะที่ตรงกันจากตัวเลือก",
+    mode3Title:"พิมพ์คำอ่าน", mode3Desc:"พิมพ์คำอ่านให้ตรงกับตัวอักษรที่สุ่มขึ้นมา วัดความแม่นยำ",
+    mode4Title:"คำศัพท์ฮิรางานะ", mode4Desc:"คำศัพท์ที่เขียนด้วยฮิรางานะล้วน พร้อมคำอ่านและคำแปล",
+    mode5Title:"ตารางฮิรางานะ", mode5Desc:"ตารางอ้างอิงอักษรฮิรางานะครบชุด พร้อมคำอ่านและเสียงพิเศษ",
+    chartLegend:"ตารางอ้างอิง ดูอักษรพร้อมคำอ่านโรมาจิได้ครบทุกตัว",
+    chartMainTitle:"เสียงพื้นฐาน (Gojūon)",
+    chartDakutenTitle:"เสียงพิเศษ: เสียงก้อง / กึ่งก้อง (Dakuten・Handakuten)",
+    chartYouonTitle:"เสียงพิเศษ: เสียงควบ (Yōon)",
+    backBtn:"กลับเมนู",
+    hintClick:"แตะการ์ด หรือกด Space / Enter เพื่อสุ่มใหม่",
+    hintClick2:"แตะตัวอักษรฮิรางานะที่ตรงกับคำอ่าน",
+    hintClick4:"แตะการ์ด หรือกด Space / Enter เพื่อคำถัดไป",
+    checkBtn:"ตรวจคำตอบ",
+    scoreLabel:"คะแนน", streakLabel:"ติดต่อกัน",
+    correctMsg:"ถูกต้อง! 🎉",
+    wrongMsgPrefix:"ไม่ถูก คำตอบคือ: ",
+    hideRomaji:"ซ่อนคำอ่าน", showRomaji:"แสดงคำอ่าน",
+    hideMeaning:"ซ่อนคำแปล", showMeaning:"แสดงคำแปล",
+    footerText:"ひらがな Lab — ฝึกฮิรางานะให้คล่อง ทีละตัว ทีละคำ",
+    inputPlaceholder:"พิมพ์คำอ่าน..."
+  },
+  en:{
+    appSubtitle:"Master all 46 Hiragana characters",
+    heroTitle:"Choose a practice mode",
+    heroSub:"Learn and test all 46 Hiragana characters through 5 modes",
+    mode1Title:"Random Character", mode1Desc:"See a random Hiragana character, practice recognizing its shape",
+    mode2Title:"Random Reading", mode2Desc:"See a random romaji reading, then pick the matching Hiragana character",
+    mode3Title:"Type the Reading", mode3Desc:"Type the romaji reading that matches the character shown",
+    mode4Title:"Hiragana Vocabulary", mode4Desc:"Words written purely in Hiragana, with reading and meaning",
+    mode5Title:"Hiragana Chart", mode5Desc:"A full reference chart of hiragana with readings and special sounds",
+    chartLegend:"Reference chart — every character with its romaji reading",
+    chartMainTitle:"Basic Sounds (Gojūon)",
+    chartDakutenTitle:"Special Sounds: Voiced / Semi-voiced (Dakuten・Handakuten)",
+    chartYouonTitle:"Special Sounds: Contracted (Yōon)",
+    backBtn:"Back to menu",
+    hintClick:"Tap the card, or press Space / Enter for a new one",
+    hintClick2:"Tap the Hiragana character that matches the reading",
+    hintClick4:"Tap the card, or press Space / Enter for the next word",
+    checkBtn:"Check answer",
+    scoreLabel:"Score", streakLabel:"Streak",
+    correctMsg:"Correct! 🎉",
+    wrongMsgPrefix:"Not quite — the answer was: ",
+    hideRomaji:"Hide reading", showRomaji:"Show reading",
+    hideMeaning:"Hide meaning", showMeaning:"Show meaning",
+    footerText:"ひらがな Lab — practice hiragana, one card at a time",
+    inputPlaceholder:"Type the reading..."
+  }
+};
+
+let lang = "th";
+let theme = "sky";
+
+function applyLang(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if(STR[lang][key]) el.textContent = STR[lang][key];
+  });
+  document.getElementById("answerInput").placeholder = STR[lang].inputPlaceholder;
+  document.getElementById("toggleRomajiText").textContent = state.hideRomaji ? STR[lang].showRomaji : STR[lang].hideRomaji;
+  document.getElementById("toggleMeaningText").textContent = state.hideMeaning ? STR[lang].showMeaning : STR[lang].hideMeaning;
+  document.documentElement.lang = lang;
+}
+
+document.getElementById("langSelect").addEventListener("change", (e)=>{
+  lang = e.target.value;
+  applyLang();
+  renderMeaning4();
+});
+
+/* ============ THEME ============ */
+document.getElementById("themeDots").addEventListener("click",(e)=>{
+  const dot = e.target.closest(".theme-dot");
+  if(!dot) return;
+  theme = dot.getAttribute("data-t");
+  document.documentElement.setAttribute("data-theme", theme);
+  document.querySelectorAll(".theme-dot").forEach(d=>d.classList.remove("active"));
+  dot.classList.add("active");
+});
+
+/* ============ NAVIGATION ============ */
+const screens = {
+  home: document.getElementById("screen-home"),
+  0: document.getElementById("panel-0"),
+  1: document.getElementById("panel-1"),
+  2: document.getElementById("panel-2"),
+  3: document.getElementById("panel-3"),
+  4: document.getElementById("panel-4"),
+};
+let currentMode = null;
+let chartBuilt = false;
+
+function goHome(){
+  currentMode = null;
+  screens.home.style.display = "block";
+  [0,1,2,3,4].forEach(m=>screens[m].classList.remove("active"));
+}
+function goMode(m){
+  currentMode = m;
+  screens.home.style.display = "none";
+  [0,1,2,3,4].forEach(x=>screens[x].classList.toggle("active", x==m));
+  if(m==1) newCard1();
+  if(m==2) newCard2(true);
+  if(m==3) newCard3(true);
+  if(m==4) newCard4();
+  if(m==0 && !chartBuilt){ buildAllCharts(); chartBuilt = true; }
+}
+document.querySelectorAll(".mode-card").forEach(c=>{
+  c.addEventListener("click", ()=> goMode(parseInt(c.getAttribute("data-mode"))));
+});
+document.querySelectorAll("[data-back]").forEach(b=> b.addEventListener("click", goHome));
+
+/* ============ helpers ============ */
+function pickRandom(arr, excludeIdx){
+  if(arr.length===1) return 0;
+  let i;
+  do{ i = Math.floor(Math.random()*arr.length); }while(i===excludeIdx);
+  return i;
+}
+function normalize(str){
+  return str.trim().toLowerCase();
+}
+
+/* ============ MODE 1 ============ */
+let idx1 = -1;
+function newCard1(){
+  idx1 = pickRandom(HIRAGANA, idx1);
+  document.getElementById("kanaDisplay1").textContent = HIRAGANA[idx1][0];
+}
+document.getElementById("card1").addEventListener("click", newCard1);
+
+/* ============ MODE 2 ============ */
+let idx2 = -1;
+let score2 = 0, total2 = 0, streak2 = 0;
+let awaitingNext2 = false;
+
+function newCard2(reset){
+  if(reset){ score2=0; total2=0; streak2=0; updateStats2(); }
+  idx2 = pickRandom(HIRAGANA, idx2);
+  document.getElementById("romajiDisplay2").textContent = HIRAGANA[idx2][1];
+  buildChoices2();
+  const fb = document.getElementById("feedback2");
+  fb.textContent = "";
+  fb.className = "feedback";
+  awaitingNext2 = false;
+}
+
+function buildChoices2(){
+  const poolSize = HIRAGANA.length;
+  const chosen = new Set([idx2]);
+  while(chosen.size < 4 && chosen.size < poolSize){
+    chosen.add(Math.floor(Math.random()*poolSize));
+  }
+  const arr = Array.from(chosen);
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  const grid = document.getElementById("choiceGrid2");
+  grid.innerHTML = "";
+  arr.forEach(i=>{
+    const btn = document.createElement("button");
+    btn.className = "choice-btn";
+    btn.type = "button";
+    btn.textContent = HIRAGANA[i][0];
+    btn.setAttribute("data-idx", i);
+    grid.appendChild(btn);
+  });
+}
+
+function updateStats2(){
+  document.getElementById("scoreVal2").textContent = score2;
+  document.getElementById("totalVal2").textContent = total2;
+  document.getElementById("streakVal2").textContent = streak2;
+}
+
+document.getElementById("choiceGrid2").addEventListener("click", (e)=>{
+  const btn = e.target.closest(".choice-btn");
+  if(!btn || awaitingNext2) return;
+  const chosenIdx = parseInt(btn.getAttribute("data-idx"), 10);
+  total2++;
+  const fb = document.getElementById("feedback2");
+  document.querySelectorAll("#choiceGrid2 .choice-btn").forEach(b=> b.disabled = true);
+  if(chosenIdx === idx2){
+    score2++; streak2++;
+    btn.classList.add("correct");
+    fb.textContent = STR[lang].correctMsg;
+    fb.className = "feedback ok";
+  }else{
+    streak2 = 0;
+    btn.classList.add("wrong");
+    const correctBtn = document.querySelector(`#choiceGrid2 .choice-btn[data-idx="${idx2}"]`);
+    if(correctBtn) correctBtn.classList.add("correct");
+    fb.textContent = STR[lang].wrongMsgPrefix + HIRAGANA[idx2][0];
+    fb.className = "feedback no";
+  }
+  updateStats2();
+  awaitingNext2 = true;
+  setTimeout(()=> newCard2(false), 1100);
+});
+
+/* ============ MODE 3 ============ */
+let idx3 = -1;
+let score3 = 0, total3 = 0, streak3 = 0;
+let awaitingNext3 = false;
+function newCard3(reset){
+  if(reset){ score3=0; total3=0; streak3=0; updateStats3(); }
+  idx3 = pickRandom(HIRAGANA, idx3);
+  document.getElementById("kanaDisplay3").textContent = HIRAGANA[idx3][0];
+  const input = document.getElementById("answerInput");
+  input.value = "";
+  input.classList.remove("wrong","right");
+  document.getElementById("feedback3").textContent = "";
+  document.getElementById("feedback3").className = "feedback";
+  awaitingNext3 = false;
+  input.focus();
+}
+function updateStats3(){
+  document.getElementById("scoreVal").textContent = score3;
+  document.getElementById("totalVal").textContent = total3;
+  document.getElementById("streakVal").textContent = streak3;
+}
+function checkAnswer3(){
+  if(awaitingNext3){ newCard3(false); return; }
+  const input = document.getElementById("answerInput");
+  const val = normalize(input.value);
+  if(!val) return;
+  const correct = HIRAGANA[idx3][1];
+  const alts = ALT_ROMAJI[correct] || [];
+  const isRight = val === correct || alts.includes(val);
+  total3++;
+  const fb = document.getElementById("feedback3");
+  if(isRight){
+    score3++; streak3++;
+    input.classList.remove("wrong"); input.classList.add("right");
+    fb.textContent = STR[lang].correctMsg;
+    fb.className = "feedback ok";
+  }else{
+    streak3 = 0;
+    input.classList.remove("right"); input.classList.add("wrong");
+    fb.textContent = STR[lang].wrongMsgPrefix + correct;
+    fb.className = "feedback no";
+  }
+  updateStats3();
+  awaitingNext3 = true;
+  setTimeout(()=> newCard3(false), 1100);
+}
+document.getElementById("checkBtn").addEventListener("click", checkAnswer3);
+document.getElementById("answerInput").addEventListener("keydown",(e)=>{
+  if(e.key==="Enter"){ e.preventDefault(); checkAnswer3(); }
+});
+
+/* ============ MODE 4 ============ */
+let idx4 = -1;
+const state = { hideRomaji:false, hideMeaning:false };
+function newCard4(){
+  idx4 = pickRandom(VOCAB, idx4);
+  const [kana, romaji] = VOCAB[idx4];
+  document.getElementById("kanaDisplay4").textContent = kana;
+  document.getElementById("romajiDisplay4").textContent = romaji;
+  renderMeaning4();
+}
+function renderMeaning4(){
+  const item = VOCAB[idx4];
+  if(!item) return;
+  const meaning = lang==="th" ? item[2] : item[3];
+  document.getElementById("meaningDisplay4").textContent = meaning;
+}
+document.getElementById("card4").addEventListener("click", (e)=>{
+  if(e.target.closest(".toggle-btn")) return;
+  newCard4();
+});
+document.getElementById("toggleRomaji").addEventListener("click",(e)=>{
+  e.stopPropagation();
+  state.hideRomaji = !state.hideRomaji;
+  const el = document.getElementById("romajiDisplay4");
+  el.classList.toggle("blurred", state.hideRomaji);
+  e.currentTarget.classList.toggle("off", state.hideRomaji);
+  applyLang();
+});
+document.getElementById("toggleMeaning").addEventListener("click",(e)=>{
+  e.stopPropagation();
+  state.hideMeaning = !state.hideMeaning;
+  const el = document.getElementById("meaningDisplay4");
+  el.classList.toggle("blurred", state.hideMeaning);
+  e.currentTarget.classList.toggle("off", state.hideMeaning);
+  applyLang();
+});
+
+/* ============ MODE 5 - CHART ============ */
+function renderKanaTable(containerId, rows, headerLabels){
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  const colTemplate = `56px repeat(${headerLabels.length},1fr)`;
+
+  const headRow = document.createElement("div");
+  headRow.className = "kt-row";
+  headRow.style.gridTemplateColumns = colTemplate;
+  headRow.appendChild(document.createElement("div"));
+  headerLabels.forEach(h=>{
+    const d = document.createElement("div");
+    d.className = "kt-head-cell";
+    d.textContent = h;
+    headRow.appendChild(d);
+  });
+  el.appendChild(headRow);
+
+  rows.forEach(r=>{
+    const rowEl = document.createElement("div");
+    rowEl.className = "kt-row";
+    rowEl.style.gridTemplateColumns = colTemplate;
+
+    const label = document.createElement("div");
+    label.className = "kt-label";
+    label.textContent = r.label;
+    rowEl.appendChild(label);
+
+    r.cells.forEach(c=>{
+      const cell = document.createElement("div");
+      if(!c){
+        cell.className = "kt-cell empty";
+        rowEl.appendChild(cell);
+        return;
+      }
+      const [kj, rj] = c.split("|");
+      cell.className = "kt-cell";
+      cell.innerHTML = `<span class="kj">${kj}</span><span class="rj">${rj}</span>`;
+      rowEl.appendChild(cell);
+    });
+    el.appendChild(rowEl);
+  });
+}
+function buildAllCharts(){
+  renderKanaTable("tableMain", GOJUON_ROWS, ["a","i","u","e","o"]);
+  renderKanaTable("tableDakuten", DAKUTEN_ROWS, ["a","i","u","e","o"]);
+  renderKanaTable("tableYouon", YOUON_ROWS, ["ya","yu","yo"]);
+}
+
+/* ============ GLOBAL KEYS ============ */
+document.addEventListener("keydown",(e)=>{
+  if(e.target.tagName === "INPUT") return;
+  if(e.code==="Space" || e.code==="Enter"){
+    if(currentMode===1){
+      e.preventDefault();
+      newCard1();
+    }
+    if(currentMode===4){
+      e.preventDefault();
+      newCard4();
+    }
+  }
+});
+
+/* ============ INIT ============ */
+goHome();
+applyLang();
+</script>
+</body>
+</html>
