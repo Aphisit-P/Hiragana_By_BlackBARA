@@ -3,7 +3,7 @@
 <html lang="th" data-theme="sky">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ひらがな Lab — เรียนฮิรางานะ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Kanit:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,6 +90,10 @@
     color:var(--text);
     transition: background .4s ease, color .4s ease;
     -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;  /* Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* IE10+ */
+    user-select: none;          /* Standard */
   }
   button{font-family:inherit;}
 
@@ -381,7 +385,13 @@
       var(--input-bg);
     border:2px dashed var(--secondary);
     overflow:hidden;
-    touch-action:none;
+    touch-action:none; /* ป้องกันการเลื่อนหน้าจอขณะลากเขียน */
+    
+    /* 👇 เพิ่มเติมส่วนนี้เพื่อป้องกันบน Mobile/iPad */
+    -webkit-user-select: none;   /* ป้องกันการคลอบเพื่อคัดลอกข้อความบน iOS */
+    user-select: none;           /* ป้องกันการคลอบเพื่อคัดลอกข้อความ */
+    -webkit-touch-callout: none; /* ป้องกันการขึ้น Pop-up เมนูเวลาจิ้มค้างบน iOS */
+    -webkit-tap-highlight-color: transparent; /* ลบสีไฮไลท์สีฟ้าเวลาแตะสัมผัส */
   }
   .write-ghost{
     position:absolute; inset:0;
@@ -1249,11 +1259,17 @@ function getCanvasPos5(e){
 
 canvas5.addEventListener("pointerdown", (e)=>{
   e.preventDefault();
+  e.stopPropagation(); // 👈 ป้องกันไม่ให้ Event หลุดไปถึงตัวเบราว์เซอร์ชั้นนอก
   drawing5 = true;
   canvas5.setPointerCapture(e.pointerId);
   const p = getCanvasPos5(e);
   ctx5.beginPath();
   ctx5.moveTo(p.x, p.y);
+});
+
+// ดักจับเพิ่มเติมเพื่อป้องกันการกดค้าง (Context Menu) บนปุ่มขวาหรือบน Mobile ในพื้นที่วาดเขียน
+canvas5.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
 });
 canvas5.addEventListener("pointermove", (e)=>{
   if(!drawing5) return;
@@ -1485,6 +1501,51 @@ document.addEventListener("keydown",(e)=>{
 if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = () => {};
 }
+
+/* ============ระบบป้องกันการคัดลอกและดูโค้ด ============ */
+
+// 1. ป้องกันการคลิกขวา (Context Menu) ทั่วทั้งหน้าเว็บ
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+// 2. ป้องกันคีย์ลัดยอดฮิต (Ctrl+S, Ctrl+U, Ctrl+Shift+I, F12 ฯลฯ)
+document.addEventListener('keydown', function(e) {
+  // บล็อก F12
+  if (e.keyCode === 123) {
+    e.preventDefault();
+    return false;
+  }
+  
+  // บล็อก Ctrl + Shift + I (เปิด DevTools บน Windows) หรือ Cmd + Alt + I (Mac)
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
+    e.preventDefault();
+    return false;
+  }
+  
+  // บล็อก Ctrl + U (ดู Source Code) หรือ Cmd + Option + U
+  if ((e.ctrlKey || e.metaKey) && e.keyCode === 85) {
+    e.preventDefault();
+    return false;
+  }
+  
+  // บล็อก Ctrl + S (เซฟหน้าเว็บลงเครื่อง) หรือ Cmd + S
+  if ((e.ctrlKey || e.metaKey) && e.keyCode === 83) {
+    e.preventDefault();
+    return false;
+  }
+
+  // บล็อก Ctrl + C (คัดลอก) ในกรณีที่หลุดจาก CSS ป้องกัน
+  if ((e.ctrlKey || e.metaKey) && e.keyCode === 67) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+// 3. ป้องกันการลากคลุมเพื่อลากสิ่งของหรือรูปภาพ (Drag & Drop) ออกไปนอกเว็บ
+document.addEventListener('dragstart', function(e) {
+  e.preventDefault();
+});
 
 /* ============ INIT ============ */
 goHome();
