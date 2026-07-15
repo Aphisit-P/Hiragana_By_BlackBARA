@@ -90,6 +90,7 @@
     color:var(--text);
     transition: background .4s ease, color .4s ease;
     -webkit-tap-highlight-color: transparent;
+    /* ป้องกันการลากคลุมข้อความและเลือกองค์ประกอบทั่วทั้งหน้าเว็บ */
     -webkit-user-select: none;  /* Safari */
     -moz-user-select: none;     /* Firefox */
     -ms-user-select: none;      /* IE10+ */
@@ -827,7 +828,7 @@ const GOJUON_ROWS = [
   {label:"m",  cells:["ま|ma","み|mi","む|mu","め|me","も|mo"]},
   {label:"y",  cells:["や|ya","","ゆ|yu","","よ|yo"]},
   {label:"r",  cells:["ら|ra","り|ri","る|ru","れ|re","ろ|ro"]},
-  {label:"w",  cells:["わ|wa","","","","をして|wo"]},
+  {label:"w",  cells:["わ|wa","","","","を|wo"]},
   {label:"n",  cells:["ん|n","","","",""]}
 ];
 
