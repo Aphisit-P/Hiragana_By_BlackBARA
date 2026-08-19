@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="th" data-theme="sky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ひらがな Lab — เรียนฮิรางานะ</title>
+<link rel="icon" href="wedB.png" type="image/png">
+<link rel="apple-touch-icon" href="wedB.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Kanit:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <a href="index.html" class="home-link" title="เลือกชุดตัวอักษร">←</a>
+      <div>
+        <div class="brand-mark">ひらがな Lab</div>
+        <div class="brand-sub" data-i18n="appSubtitle">ฝึกจำอักษรฮิรางานะ 46 ตัว</div>
+      </div>
+    </div>
+    <div class="topbar-controls">
+      <div class="pill-select">
+        <select id="langSelect">
+          <option value="th">🇹🇭 ไทย</option>
+          <option value="en">🇬🇧 English</option>
+        </select>
+      </div>
+      <div class="theme-dots" id="themeDots">
+        <div class="theme-dot active" data-t="sky" title="Sky"></div>
+        <div class="theme-dot" data-t="fuji" title="Fuji"></div>
+        <div class="theme-dot" data-t="wood" title="Wood"></div>
+        <div class="theme-dot" data-t="dark" title="Dark"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MODE SELECT SCREEN ===== -->
+  <section id="screen-home">
+    <div class="hero">
+      <h1 data-i18n="heroTitle">เลือกโหมดฝึกฝน</h1>
+      <p data-i18n="heroSub">เรียนรู้และทดสอบตัวอักษรฮิรางานะทั้ง 46 ตัว ผ่าน 6 รูปแบบ</p>
+    </div>
+    <div class="mode-grid">
+      <div class="mode-card" data-mode="0">
+        <div class="num">MODE 00</div>
+        <div class="glyph">ひょう</div>
+        <h3 data-i18n="mode5Title">ตารางฮิรางานะ</h3>
+        <p data-i18n="mode5Desc">ตารางอ้างอิงอักษรฮิรางานะครบชุด พร้อมคำอ่านและเสียงพิเศษ</p>
+      </div>
+      <div class="mode-card" data-mode="1">
+        <div class="num">MODE 01</div>
+        <div class="glyph">あ</div>
+        <h3 data-i18n="mode1Title">สุ่มตัวอักษร</h3>
+        <p data-i18n="mode1Desc">ดูตัวอักษรฮิรางานะที่สุ่มขึ้นมา ฝึกจำรูปตัวอักษร</p>
+      </div>
+      <div class="mode-card" data-mode="2">
+        <div class="num">MODE 02</div>
+        <div class="glyph">ka → か</div>
+        <h3 data-i18n="mode2Title">สุ่มคำอ่าน</h3>
+        <p data-i18n="mode2Desc">ดูคำอ่านโรมาจิที่สุ่มขึ้นมา ฝึกนึกถึงตัวอักษรที่ตรงกัน</p>
+      </div>
+      <div class="mode-card" data-mode="3">
+        <div class="num">MODE 03</div>
+        <div class="glyph">さ→sa</div>
+        <h3 data-i18n="mode3Title">พิมพ์คำอ่าน</h3>
+        <p data-i18n="mode3Desc">พิมพ์คำอ่านให้ตรงกับตัวอักษรที่สุ่มขึ้นมา วัดความแม่นยำ</p>
+      </div>
+      <div class="mode-card" data-mode="4">
+        <div class="num">MODE 04</div>
+        <div class="glyph">ねこ</div>
+        <h3 data-i18n="mode4Title">คำศัพท์ฮิรางานะ</h3>
+        <p data-i18n="mode4Desc">คำศัพท์ที่เขียนด้วยฮิรางานะล้วน พร้อมคำอ่านและคำแปล</p>
+      </div>
+      <div class="mode-card" data-mode="5">
+        <div class="num">MODE 05</div>
+        <div class="glyph">✎ あ</div>
+        <h3 data-i18n="mode6Title">ฝึกเขียน</h3>
+        <p data-i18n="mode6Desc">ดูคำอ่านแล้วลากเขียนตัวฮิรางานะด้วยนิ้ว ปากกา หรือเมาส์ เขียนเบี้ยวได้ ไม่ต้องเป๊ะ</p>
+      </div>
+      <!-- โหมด 6 ใหม่ตามที่ขอมา -->
+      <div class="mode-card" data-mode="6">
+        <div class="num">MODE 06</div>
+        <div class="glyph">🗣️ あ</div>
+        <h3 data-i18n="mode7Title">ฝึกอ่านออกเสียง</h3>
+        <p data-i18n="mode7Desc">สุ่มตัวอักษรหรือคำศัพท์ กดเปิดไมค์แล้วลองอ่านออกเสียงเพื่อตรวจสอบความถูกต้อง</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 1 ===== -->
+  <section class="panel" id="panel-1">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode1Title">สุ่มตัวอักษร</span></div>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard" id="card1">
+        <div class="kana-big" id="kanaDisplay1">あ</div>
+        <div class="hint-line" data-i18n="hintClick">แตะการ์ด หรือกด Space / Enter เพื่อสุ่มใหม่</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 2 ===== -->
+  <section class="panel" id="panel-2">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip">
+        <span data-i18n="scoreLabel">คะแนน</span>: <b id="scoreVal2">0</b>/<span id="totalVal2">0</span>
+        &nbsp;•&nbsp; <span data-i18n="streakLabel">ติดต่อกัน</span>: <b id="streakVal2">0</b>
+      </div>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard no-click" id="card2">
+        <div class="romaji-big" id="romajiDisplay2">a</div>
+        <div class="choice-grid" id="choiceGrid2"></div>
+        <div class="feedback" id="feedback2"></div>
+        <div class="hint-line" data-i18n="hintClick2">แตะตัวอักษรฮิรางานะที่ตรงกับคำอ่าน</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 3 ===== -->
+  <section class="panel" id="panel-3">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip">
+        <span data-i18n="scoreLabel">คะแนน</span>: <b id="scoreVal">0</b>/<span id="totalVal">0</span>
+        &nbsp;•&nbsp; <span data-i18n="streakLabel">ติดต่อกัน</span>: <b id="streakVal">0</b>
+      </div>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard no-click" id="card3">
+        <div class="kana-big" id="kanaDisplay3">た</div>
+        <div class="answer-row">
+          <input type="text" id="answerInput" class="answer-input" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button class="check-btn" id="checkBtn" data-i18n="checkBtn">ตรวจคำตอบ</button>
+        </div>
+        <div class="feedback" id="feedback3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 4 ===== -->
+  <section class="panel" id="panel-4">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode4Title">คำศัพท์ฮิรางานะ</span></div>
+    </div>
+    <div class="toggle-row">
+      <button class="toggle-btn" id="toggleRomaji"><span class="dot"></span><span id="toggleRomajiText" data-i18n="hideRomaji">ซ่อนคำอ่าน</span></button>
+      <button class="toggle-btn" id="toggleMeaning"><span class="dot"></span><span id="toggleMeaningText" data-i18n="hideMeaning">ซ่อนคำแปล</span></button>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard" id="card4">
+        <div class="kana-big" id="kanaDisplay4">ねこ</div>
+        <div class="sub-line" id="romajiDisplay4">neko</div>
+        <div class="meaning-line" id="meaningDisplay4">แมว</div>
+        <div class="hint-line" data-i18n="hintClick4">แตะการ์ด หรือกด Space / Enter เพื่อคำถัดไป</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 5 - CHART ===== -->
+  <section class="panel" id="panel-0">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode5Title">ตารางฮิรางานะ</span></div>
+    </div>
+    <div class="chart-legend" data-i18n="chartLegend">แตะที่ตัวอักษรเพื่อดูคำอ่านชัดๆ</div>
+    <div class="chart-wrap">
+      <div class="chart-block">
+        <h2><span class="tag">あ・か・さ…</span><span data-i18n="chartMainTitle">เสียงพื้นฐาน (Gojūon)</span></h2>
+        <div class="kana-table" id="tableMain"></div>
+      </div>
+      <div class="chart-block">
+        <h2><span class="tag">が・ざ・だ・ば・ぱ</span><span data-i18n="chartDakutenTitle">เสียงพิเศษ: เสียงก้อง / กึ่งก้อง (Dakuten・Handakuten)</span></h2>
+        <div class="kana-table" id="tableDakuten"></div>
+      </div>
+      <div class="chart-block">
+        <h2><span class="tag">きゃ・しゃ・ちゃ…</span><span data-i18n="chartYouonTitle">เสียงพิเศษ: เสียงควบ (Yōon)</span></h2>
+        <div class="kana-table" id="tableYouon"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 5 - WRITING PRACTICE ===== -->
+  <section class="panel" id="panel-5">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode6Title">ฝึกเขียน</span></div>
+    </div>
+    <div class="stage-wrap">
+      <div class="write-card">
+        <div class="romaji-line">
+          <div class="romaji-big" id="romajiDisplay5">a</div>
+          <span class="reveal-kana" id="revealKana5"></span>
+        </div>
+
+        <div class="canvas-wrap">
+          <div class="write-ghost" id="writeGhost5" style="display:none">あ</div>
+          <canvas id="writeCanvas5"></canvas>
+        </div>
+
+        <div class="write-toolbar">
+          <button class="wtool-btn off" id="toggleGuide5"><span class="dot"></span><span id="toggleGuide5Text" data-i18n="showGuide">แสดงตัวอย่าง</span></button>
+          <button class="wtool-btn" id="revealBtn5"><span class="dot"></span><span data-i18n="revealBtnText">เฉลย</span></button>
+          <button class="wtool-btn" id="clearBtn5"><span class="dot"></span><span data-i18n="clearBtnText">ล้าง</span></button>
+        </div>
+
+        <div class="hint-line-static" data-i18n="hintClick5">ดูคำอ่านด้านบน แล้วลากเขียนตัวฮิรางานะในกรอบ เขียนเบี้ยวหรือเส้นไม่ตรงก็ได้ ไม่ต้องเป๊ะ</div>
+
+        <button class="check-btn" id="nextBtn5" data-i18n="nextBtnText">คำถัดไป →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODE 6 - SPEAKING PRACTICE ===== -->
+  <section class="panel" id="panel-6">
+    <div class="panel-topline">
+      <button class="back-btn" data-back>← <span data-i18n="backBtn">กลับเมนู</span></button>
+      <div class="stat-chip"><span data-i18n="mode7Title">ฝึกอ่านออกเสียง</span></div>
+    </div>
+    <div class="toggle-row">
+      <button class="toggle-btn off" id="toggleRomaji6"><span class="dot"></span><span id="toggleRomajiText6" data-i18n="showRomaji">แสดงคำอ่านอังกฤษ</span></button>
+    </div>
+    <div class="stage-wrap">
+      <div class="flashcard no-click" id="card6">
+        <div class="kana-big" id="kanaDisplay6">あ</div>
+        <div class="sub-line blurred" id="romajiDisplay6" style="font-family: var(--font-en);">a</div>
+        <div class="meaning-line" id="meaningDisplay6">ตัวอักษรเดี่ยว</div>
+
+        <button class="mic-btn" id="micBtn6" title="กดแล้วเริ่มพูด">🎙️</button>
+        <div class="feedback" id="feedback6" style="margin-top: 5px; min-height: 24px;"></div>
+
+        <div class="speak-tools">
+          <button class="speak-btn" id="answerBtn6">🔑 <span data-i18n="revealAndListen">ฟังเฉลย (เสียงสิริ)</span></button>
+          <button class="speak-btn" id="nextBtn6"><span data-i18n="nextWord">คำถัดไป →</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer data-i18n="footerText">ひらがな Lab — ฝึกฮิรางานะให้คล่อง ทีละตัว ทีละคำ</footer>
+</div>
+<script src="data-hiragana.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
