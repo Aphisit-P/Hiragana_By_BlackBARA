@@ -10,7 +10,7 @@
   /* ---------- ตั้งค่า ---------- */
   // YouTube Data API v3 key (ใช้สำหรับ "ค้นหาเพลง" เท่านั้น — เล่นเพลงไม่ต้องใช้ key)
   // ปล่อยว่างได้ แล้วผู้ใช้วาง key ในช่องค้นหาแทนได้
-  const YT_API_KEY = '';
+  const YT_API_KEY = 'AIzaSyAWJfgf0bOLC62nN8XZ4Up68iuCjRirUoc';
 
   const LS_KEY = 'hlm_state_v1';
   const LS_OWNER = 'hlm_owner';
